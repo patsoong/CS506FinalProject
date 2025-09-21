@@ -1,4 +1,4 @@
-# 🏀 NBA Champions Prediction Project
+# NBA Champions Prediction Project
 
 ##  Description
 This project explores **predicting NBA champions** using historical team and player statistics. The primary goal is to build models that leverage past performance to predict outcomes such as:
@@ -31,7 +31,7 @@ Additionally, we aim to perform **feature engineering** to create new variables 
 
 ---
 
-## 🤖 Modeling Plan
+##  Modeling Plan
 We will experiment with multiple methods:
 - **Logistic Regression / Linear Models** – for interpretability (predicting binary outcomes like champion vs. non-champion).
 - **Random Forest / XGBoost** – for handling non-linear relationships and feature importance.
