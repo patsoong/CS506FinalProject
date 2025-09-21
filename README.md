@@ -49,9 +49,8 @@ We will experiment with multiple methods:
 ---
 
 ##  Test Plan
-- **Train/Test Split**: Train on seasons before 2015, test on seasons from 2015–2023.
+- **Train/Test Split**: Train on seasons before 2015, test on seasons from 2015–2023. OR Train on randomly selected 80% of the dataset and test on the remaining 20%. 
 - **Cross-Validation**: Use k-fold cross-validation to ensure robustness.
-- **Temporal Testing**: Ensure models trained on earlier seasons generalize to more recent ones (e.g., train on 2000–2015, test on 2016–2023).
 - **Evaluation Metrics**: Accuracy for binary predictions, precision/recall for champion classification, log-loss for probability calibration.
 
 ---
