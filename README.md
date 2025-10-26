@@ -21,6 +21,7 @@ Additionally, we aim to perform **feature engineering** to create new variables 
 - **Sources**:
   - [Basketball Reference](https://www.basketball-reference.com/) for season-level team and player stats.
   - [NBA Stats API](https://github.com/swar/nba_api) for more granular game-by-game data.
+  - [NBA Dataset - Box Scores and Stats](https://www.kaggle.com/datasets/eoinamoore/historical-nba-data-and-player-box-scores?select=TeamStatistics.csv) holds the current dataset in use.
   - Kaggle datasets (e.g., “NBA Games Since 2004” and “NBA Team Stats”).
 
 - **Data Needed**:
