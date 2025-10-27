@@ -15,11 +15,15 @@ class PCAProcessor:
         if exclude_cols is None:
             exclude_cols = ["season", "team_name"]
 
-        numeric_df = df.select_dtypes(include=["int64", "float64"])
-        numeric_df = numeric_df.drop(columns=[col for col in exclude_cols if col in numeric_df.columns], errors="ignore")
+        df = df.reset_index(drop=True)
+
+        numeric_df = df.select_dtypes(include=["number"]).drop(
+            columns=[col for col in exclude_cols if col in df.columns], errors="ignore"
+        )
+
         self.feature_names = numeric_df.columns.tolist()
 
-        X = numeric_df.values
+        X = numeric_df.to_numpy()
         if self.scale:
             self.scaler = StandardScaler()
             X = self.scaler.fit_transform(X)
