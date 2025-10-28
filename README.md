@@ -1,3 +1,7 @@
+[Midterm Report Video](https://youtu.be/CUzXF3BefUc)
+
+---
+
 # NBA Championship Prediction Project
 
 This project aims to predict whether an NBA team will win the championship in a given season based on historical team statistics from **1985 to 2025**.  
