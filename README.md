@@ -430,11 +430,6 @@ This is the strongest performance of all models used in the project.
   <img src="images/randomforst2.png" alt="Random Forest: Top-K Accuracy Curve" width="800"/>
 </p>
 
-## 2026 Champion Predicition:
-Thunder with probability 0.993
-
-(This is the sharpest probability distrubution among all models.)
-
 ## Final Model Comparison
 | **Model**              | **PR-AUC** | **Top-1 Accuracy** | **Top-2 Accuracy** | **Top-4 Accuracy** |
 | ---------------------- | ---------- | ------------------ | ------------------ | ------------------ |
