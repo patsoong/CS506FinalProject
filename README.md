@@ -433,14 +433,18 @@ This is the strongest performance of all models used in the project.
 
 
 ## Conclusion & Future Work
-- Our best-performing models (Random Forest, Softmax NN) reached 70% Top-1 accuracy and 100% Top-4 accuracy, demonstrating that championships are surprisingly predictable with engineered features.
-- Season-relative normalization significantly improves all models by removing era bias.
-- Ranking metrics (Top-K accuracy, PR-AUC) are essential for rare-event prediction.
+- We built numerous NBA championship prediction models using season-level team statistics from 1985-2025
+- Implemented temporal train and test splits to ensure realistic forecasting and prevent leakage
+- Ranking metrics (Top-K Accuracy, PR-AUC) were effective, since only one team per season is a champion, and standard accuracy is misleading.
+- The strongest models correctly identified nearly all true contenders, showing that championships are more predictable than expected when using engineered features and ranking-based evaluation.
+- Overall, Random Forest was the best model as it consistently delivered the highest predictive accuracy, and correctly ranked every true champion within the Top-4
+- 
   
 ### For future work, we can:
 - incorporate player-level and lineup-level data
 - integrate injury and roster transactions
-- explore graph neural networks for team interaction modeling
+- engineer stronger nonlinear features to capture more data
 - simulate playoff brackets rather than single-season predictions
 
 Overall, the project successfully transitions from simple logistic models to sophisticated ranking systems, producing genuine predictive insights into NBA championship outcomes.
+
