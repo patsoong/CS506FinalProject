@@ -164,22 +164,7 @@ This analysis provided historical context for understanding how external factors
 
 ---
 
-### Feature Mean Differences Between Champions and Non-Champions
 
-To further quantify how championship teams statistically differ from others, we compared the **mean values of key performance metrics** between the two groups.  
-The resulting bar plot displayed the difference in means for several features, with positive bars indicating metrics where champions outperform non-champions.
-
-`Avg_point_diff` again dominated the results, showing that champions outperform other teams by a large margin in average point differential.  
-Other notable gaps appeared in **`avg_assists`** and **`avg_reb_total`**, indicating that ball movement and rebounding are key components of sustained success.  
-`Avg_turnovers` was negatively associated with championships, suggesting that limiting mistakes is another subtle but important component of winning.
-
-This analysis highlighted a small set of metrics that truly separate championship teams from the rest.
-
-<p align="center">
-  <img src="images/cs506-championdiffers.png" alt="Feature Mean Differences Between Champions and Non-Champions" width="500"/>
-</p>
-
----
 
 ## Feature Engineering
 
@@ -217,25 +202,19 @@ This step dramatically improved the quality of signals available to the models.
 
 ---
 
-# Final Project Additions: Post-Midterm Modeling & Results
 
-## Roadmap From Midterm → Final Project
-After completing the midterm work—which focused on data cleaning, feature engineering, exploratory visualizations, and baseline logistic regression—we expanded the project to include six advanced models, new season-relative features, more realistic temporal evaluation, and ranking-based performance metrics.
-These additions move the project from “proof of concept” into a full championship forecasting system, allowing us to evaluate predictions for unseen future seasons and generate full-league rankings for 2026 and beyond.
 
-### Why Temporal Splitting Was Required (Train ≤2015 → Test ≥2016)
+### Selecting Temporal Splitting of the Dataset
 Random train/test splits allow the model to “cheat” by learning patterns from future seasons.
 This is unrealistic because:
 - team styles, pace, and scoring change dramatically across eras
 - modern teams (2020s) should never influence predictions about the 1990s
 - championship frequency is extremely rare—future examples should not leak backward
 
-To simulate true NBA forecasting, we used:
+Thus, to simulate true NBA forecasting, we used:
 
 Training data: 1985–2015  
 Test data: 2016–2025
-
-This forces the model to generalize historically, just like a real analyst predicting future champions.
 
 ---
 
@@ -262,7 +241,7 @@ Measures probability concentration on the true champion—perfect for rare-event
 These metrics match playoff structure and reflect realistic forecasting.
 
 ---
-## Additional Feature Engineering After Midterm
+## Additional Feature Engineering 
 
 To make models era-robust and context-aware, we engineered new features capturing season-relative performance, solving issues caused by changing league averages over decades.
 
