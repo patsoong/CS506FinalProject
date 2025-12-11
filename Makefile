@@ -1,13 +1,26 @@
-PYTHON    = python3
-VENV_DIR  = venv
-PIP       = $(VENV_DIR)/bin/pip
-PYTHONBIN = $(VENV_DIR)/bin/python
-JUPYTER   = $(VENV_DIR)/bin/jupyter
-NOTEBOOK  = nba_champion_models.ipynb #replace this with full ipynb name
+# make → opens the main notebook
+# make main → same
+# make nn → opens the NN-only notebook
 
-.PHONY: all install notebook run test clean help
+# make install → sets up venv + deps
+# make test → runs pytest
 
-all: notebook
+# make clean → deletes venv + caches
+
+
+
+PYTHON       = python3
+VENV_DIR     = venv
+PIP          = $(VENV_DIR)/bin/pip
+PYTHONBIN    = $(VENV_DIR)/bin/python
+JUPYTER      = $(VENV_DIR)/bin/jupyter
+
+MAIN_NOTEBOOK = All_models_and_visualizations.ipynb
+NN_NOTEBOOK   = softmaxNN.ipynb
+
+.PHONY: all install main nn run test clean help
+
+all: main
 
 install: $(VENV_DIR)/bin/activate
 	$(PIP) install -r requirements.txt
@@ -17,10 +30,13 @@ $(VENV_DIR)/bin/activate: requirements.txt
 	$(PIP) install --upgrade pip
 	touch $@
 
-notebook: install
-	$(JUPYTER) notebook $(NOTEBOOK)
+main: install
+	$(JUPYTER) notebook $(MAIN_NOTEBOOK)
 
-run: notebook
+nn: install
+	$(JUPYTER) notebook $(NN_NOTEBOOK)
+
+run: main
 
 test: install
 	$(PYTHONBIN) -m pytest
