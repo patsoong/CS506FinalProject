@@ -33,7 +33,7 @@ make nn
 
 ## Data Processing
 
-We implemented a structured **data-processing workflow** for preparing the NBA team data for modeling and predictive analysis through **data cleaning and integration** and **feature engineering**.
+We implemented a structured **data-processing workflow** for preparing the NBA team data for modeling and predictive analysis through **data cleaning and integration** and **feature engineering** gathered from this [Kaggle dataset](https://www.kaggle.com/datasets/eoinamoore/historical-nba-data-and-player-box-scores?select=Games.csv).
 
 ---
 
@@ -105,7 +105,6 @@ This final dataset contains all raw, engineered, and season-normalized features 
 
 For the exploratory analysis portion of this project, we focused on identifying patterns that distinguish championship-winning NBA teams from non-champions and understanding how league competitiveness has evolved over time.  
 Rather than producing generic summary plots, we selected visualizations that reveal actionable insights relevant to predicting championships.
-The dataset used was of this [Kaggle dataset](https://www.kaggle.com/datasets/eoinamoore/historical-nba-data-and-player-box-scores?select=Games.csv).
 
 ---
 
