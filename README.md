@@ -197,7 +197,9 @@ We began with team-level statistics such as **offensive/defensive rating**, **as
 - **Assist-to-Turnover Ratio** — measures ball-handling efficiency  
 - **Shooting Efficiency Metrics** — combines eFG% and TS% for scoring effectiveness  
 - **Rebounding Strength** — uses ORB% and DREB% to capture possession control  
-- **Seasonal Aggregates** — standardized per-game and per-100-possession metrics  
+- **Seasonal Aggregates** — standardized per-game and per-100-possession metrics
+- **SOS (Strength of Schedule)** - Measures how difficult a team’s opponents were on average.
+Positive = tougher schedule, negative = easier.
 
 After cleaning and processing, the resulting dataset  
 **`data/processed/team_season_features_v2_clean-2.csv`**  
