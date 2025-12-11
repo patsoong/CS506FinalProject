@@ -263,132 +263,53 @@ Tree-based models (RF, XGBoost) can produce uncalibrated scores.
 We applied sigmoid calibration to turn outputs into meaningful probabilities.
 These additions improved performance across all models, especially Random Forest and Softmax NN.
 
-## Final Models and Results
+## Modeling
 
-Below are the six models trained after the midterm, each evaluated under temporal splitting.
+To predict the NBA champion using regular-season statistics, we evaluated a set of machine learning models chosen to reflect a range of modeling assumptions and levels of interpretability. Logistic Regression provided a strong linear baseline and helped establish how far simple decision boundaries could separate champions from non-champions. Support Vector Machines (SVM) expanded the hypothesis space by allowing more flexible decision surfaces, while a Softmax Neural Network offered a probabilistic framework for ranking all 30 teams simultaneously. Ensemble tree methods—XGBoost and Random Forest—were included due to their strong performance on structured tabular data, ability to model feature interactions, and robustness in small-sample settings. All models were evaluated using a temporal train–test split to simulate realistic forward-in-time prediction, ensuring that each season was predicted without access to future information.
 
-## 1. Logistic Regression (Final Evaluation)
-
-Logistic Regression remains a strong interpretable baseline.
-
-Performace (2016-2025):
-| Metric         | Score  |
-| -------------- | ------ |
-| ROC-AUC        | 0.9817 |
-| PR-AUC         | 0.7043 |
-| Top-1 Accuracy | 0.60   |
-| Top-2 Accuracy | 0.90   |
-| Top-4 Accuracy | 1.00   |
-
-Despite its simplicity, it correctly ranks the true champion in the top 4 every year.
-
-## 2. Support Vector Machine (RBF Kernel)
-
-The SVM captures nonlinear boundaries between champions and non-champions.
-
-Performance:
-| Metric         | Score  |
-| -------------- | ------ |
-| ROC-AUC        | 0.9717 |
-| PR-AUC         | 0.5226 |
-| Top-1 Accuracy | 0.50   |
-| Top-2 Accuracy | 0.90   |
-| Top-4 Accuracy | 1.00   |
-
-It struggles with probability sharpness but performs extremely well for semifinal predictions.
-
-## 3. Softmax Neural Network (Multiclass Probability Model)
-
-Produces a 30-team probability distribution, learning nonlinear patterns directly.
-
-### Performance:
-| Metric            | Score                             |
-| ----------------- | --------------------------------- |
-| Top-1 Accuracy    | **0.60**                          |
-| PR-AUC            | **0.725**                         |
-
-## 4. XGBoost (Full League Ranking + 2026 Predictions)
-
-XGBoost is used primarily as a ranking model, generating probability-like scores for all 30 teams.
-
-### Why XGBoost Works Well
-- Handles feature interactions
-- Handles nonlinear relationships
-- Extremely strong on structured tabular data
-- Produces smooth, calibrated ranking scores
-
-### Performance:
-| Metric         | Score  |
-| -------------- | ------ |
-| PR-AUC         | 0.761 |
-| Top-1 Accuracy | 0.7   |
-| Top-2 Accuracy | 0.8 |
-| Top-4 Accuracy | 1.00   |
-
-## 5. Random Forest Classifier (Final Version — Best Model Overall)
-
-Based on our full evaluation pipeline and the results shown in the final Random Forest notebook, the Random Forest Classifier was the strongest and most reliable model in the project. It delivered the highest PR-AUC of all classical ML models, perfect Top-2 and Top-4 accuracy, and tied for the best Top-1 accuracy.
-
-### Why the Random Forest Was Our Best Model
-- Best ranking performance across all metrics
-- Strongest probability concentration on true champions
-- Perfect semifinal predictions (Top-4 = 1.00)
-- Perfect finals predictions (Top-2 = 1.00)
-- Tied for best Top-1 accuracy at 70%
-- Very consistent across all 10 out-of-sample seasons (2016–2025)
-- Excellent handling of nonlinear interactions & era-normalized features
-  
-### Performance (Final RF Model from 2016-2025):
-| Metric          | Score    |
-| --------------- | -------- |
-| ROC-AUC         | 0.9879   |
-| PR-AUC          | 0.8336   |
-| Top-1 Accuracy  | **0.70** |
-| Top-2 Accuracy  | **1.00** |
-| Top-4 Accuracy  | **1.00** |
-
-The Random Forest was the only model to achieve perfect Top-2 and Top-4 accuracy and reached the highest PR-AUC overall.
-
-### Season-by-Season Champion Predictions
-Below is the exact comparison between the model’s predicted champions and the true winners:
-
-| Season   | Predicted Team | Pred Prob | True Champion | Correct |
-| -------- | -------------- | --------- | ------------- | ------- |
-| **2016** | Warriors       | 0.5212    | Cavaliers     | 0       |
-| **2017** | Warriors       | 0.7397    | Warriors      | 1       |
-| **2018** | Warriors       | 0.4835    | Warriors      | 1       |
-| **2019** | Raptors        | 0.8410    | Raptors       | 1       |
-| **2020** | Bucks          | 0.0783    | Lakers        | 0       |
-| **2021** | Clippers       | 0.0436    | Bucks         | 0       |
-| **2022** | Warriors       | 0.7102    | Warriors      | 1       |
-| **2023** | Nuggets        | 0.7608    | Nuggets       | 1       |
-| **2024** | Celtics        | 0.8998    | Celtics       | 1       |
-| **2025** | Thunder        | 0.8415    | Thunder       | 1       |
-
-### Summary
-- Correct in 7 of 10 seasons
-- All mistakes ranked the true champion within the Top-4
-- Most confident correct predictions: Celtics 2024 (0.8998) and Thunder 2025 (0.8415)
-  
-This is the strongest performance of all models used in the project.
-
-### Visualizations
-<p align="center">
-  <img src="images/randomforest.png" alt="Random Forest: Top-4 Predictions per Season (Semifinals)" width="500"/>
-</p>
-
-<p align="center">
-  <img src="images/randomforst2.png" alt="Random Forest: Top-K Accuracy Curve" width="800"/>
-</p>
-
-## Final Model Comparison
+Model Comparison (2016–2025 Evaluation)
 | **Model**              | **PR-AUC** | **Top-1 Accuracy** | **Top-2 Accuracy** | **Top-4 Accuracy** |
 | ---------------------- | ---------- | ------------------ | ------------------ | ------------------ |
-| Logistic Regression    | 0.704      | 0.60               | 0.90               | 1.00               |
-| SVM (RBF Kernel)       | 0.523      | 0.50               | 0.90               | 1.00               |
-| Random Forest          | **0.834**  | **0.70**           | **1.00**           | **1.00**           |
-| XGBoost                | 0.761      |  0.7               | 0.8                | 1                  |
-| Softmax Neural Network | **0.725**  | **0.60**           | —                  | —                  |
+| Logistic Regression    | 0.704      | 0.600              | 0.900              | 1.000              |
+| SVM (RBF Kernel)       | 0.523      | 0.500              | 0.900              | 1.000              |
+| Softmax Neural Network | 0.725      | 0.600              | —                  | —                  |
+| XGBoost                | 0.761      | 0.700              | 0.800              | 1.000              |
+| **Random Forest**      | **0.834**  | **0.700**          | **1.000**          | **1.000**          |
+
+
+Random Forest achieved the strongest overall ranking performance, outperforming all other models in Average Precision (PR-AUC) and matching or exceeding them in Top-K accuracy metrics.
+
+## Final Model Selection: Random Forest Classifier
+
+The Random Forest Classifier was selected as the final model due to its strong and consistent performance across all evaluation metrics. Given the relatively small number of seasons available, the numerical structure of the dataset, and the need for stability under temporal evaluation, Random Forests were particularly well suited for this task. The ensemble structure reduces variance across seasons, handles correlated features effectively, and produces reliable ranking scores for all 30 teams. Among all models tested, Random Forest achieved the highest Average Precision and was the only model to obtain perfect Top-2 and Top-4 accuracy.
+
+Season-by-Season Predictions (Random Forest Model)
+| **Season** | **Predicted Team** | **Pred Prob** | **True Champion** | **Correct** |
+| ---------- | ------------------ | ------------- | ----------------- | ----------- |
+| 2016       | Warriors           | 0.521         | Cavaliers         | 0           |
+| 2017       | Warriors           | 0.740         | Warriors          | 1           |
+| 2018       | Warriors           | 0.484         | Warriors          | 1           |
+| 2019       | Raptors            | 0.841         | Raptors           | 1           |
+| 2020       | Bucks              | 0.078         | Lakers            | 0           |
+| 2021       | Clippers           | 0.044         | Bucks             | 0           |
+| 2022       | Warriors           | 0.710         | Warriors          | 1           |
+| 2023       | Nuggets            | 0.761         | Nuggets           | 1           |
+| 2024       | Celtics            | 0.900         | Celtics           | 1           |
+| 2025       | Thunder            | 0.841         | Thunder           | 1           |
+
+
+### Summary:
+
+Correct in 7 of 10 out-of-sample seasons
+
+Ranked the true champion in the Top-4 every year
+
+Achieved perfect Top-2 and Top-4 accuracy
+
+Most confident correct predictions: 2024 Celtics (0.900) and 2025 Thunder (0.841)
+
+### Visualizations
+<p align="center"> <img src="images/randomforest.png" alt="Random Forest: Top-4 Predictions per Season (Semifinals)" width="500"/> </p> <p align="center"> <img src="images/randomforst2.png" alt="Random Forest: Top-K Accuracy Curve" width="800"/> </p>
 
 
 ## Conclusion & Future Work
