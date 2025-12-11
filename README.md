@@ -324,35 +324,15 @@ Performance:
 
 It struggles with probability sharpness but performs extremely well for semifinal predictions.
 
-## 3. Random Forest Classifier (Final Version With Season-Relative Features)
+## 3. Softmax Neural Network (Multiclass Probability Model)
 
-This updated Random Forest is one of our strongest final models.
+Produces a 30-team probability distribution, learning nonlinear patterns directly.
 
-### Technical Improvements
-- 5000 trees for stability
-- Balanced class weights
-- Season percentile ranks & z-scores
-- Median imputation
-- Sigmoid probability calibration
-
-### Performance (Final RF Model):
-| Metric          | Score    |
-| --------------- | -------- |
-| ROC-AUC         | 0.9879   |
-| PR-AUC          | 0.8336   |
-| Binary Accuracy | 0.9833   |
-| Top-1 Accuracy  | **0.70** |
-| Top-2 Accuracy  | **1.00** |
-| Top-4 Accuracy  | **1.00** |
-
-### Predicted Champions (2016–2025):
-
-Correct in 7 of 10 season, matching the Softmax NN and Ensemble.
-
-### Visualizations
-<p align="center"> <img src="images/XGBOOST.png" width="500"/> </p> <p align="center"> <img src="images/XGBOOST1.png" width="500"/> </p> <p align="center"> <img src="images/XGBOOST2.png" width="500"/> </p>
-
-(These visualizations show Top-4 predictions, Top-K accuracy, and champion ranking across the ranking pipeline used by RF/XGBoost/Ensemble.)
+### Performance:
+| Metric            | Score                             |
+| ----------------- | --------------------------------- |
+| Top-1 Accuracy    | **0.70**                          |
+| Average Precision | **0.784** (highest of all models) |
 
 ## 4. XGBoost (Full League Ranking + 2026 Predictions)
 
@@ -372,6 +352,11 @@ XGBoost is used primarily as a ranking model, generating probability-like scores
 
 XGBoost consistently assigns the highest likelihood to Oklahoma City for the upcoming season.
 
+### Visualizations
+<p align="center"> <img src="images/XGBOOST.png" width="500"/> </p> <p align="center"> <img src="images/XGBOOST1.png" width="500"/> </p> <p align="center"> <img src="images/XGBOOST2.png" width="500"/> </p>
+
+(These visualizations show Top-4 predictions, Top-K accuracy, and champion ranking across the ranking pipeline used by RF/XGBoost/Ensemble.)
+
 ## 5. Stacking Ensemble (LogReg + XGBoost)
 
 Combines the interpretability of Logistic Regression with the nonlinear predictive power of XGBoost.
@@ -387,20 +372,71 @@ Combines the interpretability of Logistic Regression with the nonlinear predicti
 
 The model is consistent and robust, tying RF and Softmax NN for best Top-1 accuracy.
 
-## 6. Softmax Neural Network (Multiclass Probability Model)
+## 6. Random Forest Classifier (Final Version — Best Model Overall)
 
-Produces a 30-team probability distribution, learning nonlinear patterns directly.
+Based on our full evaluation pipeline and the results shown in the final Random Forest notebook, the Random Forest Classifier was the strongest and most reliable model in the project. It delivered the highest PR-AUC of all classical ML models, perfect Top-2 and Top-4 accuracy, and tied for the best Top-1 accuracy.
 
-### Performance:
-| Metric            | Score                             |
-| ----------------- | --------------------------------- |
-| Top-1 Accuracy    | **0.70**                          |
-| Average Precision | **0.784** (highest of all models) |
+### Why the Random Forest Was Our Best Model
+- Best ranking performance across all metrics
+- Strongest probability concentration on true champions
+- Perfect semifinal predictions (Top-4 = 1.00)
+- Perfect finals predictions (Top-2 = 1.00)
+- Tied for best Top-1 accuracy at 70%
+- Very consistent across all 10 out-of-sample seasons (2016–2025)
+- Excellent handling of nonlinear interactions & era-normalized features
+  
+### Performance (Final RF Model from 2016-2025):
+| Metric          | Score    |
+| --------------- | -------- |
+| ROC-AUC         | 0.9879   |
+| PR-AUC          | 0.8336   |
+| Binary Accuracy | 0.9833   |
+| Top-1 Accuracy  | **0.70** |
+| Top-2 Accuracy  | **1.00** |
+| Top-4 Accuracy  | **1.00** |
 
-### 2026 Champion Predicition:
+The Random Forest was the only model to achieve perfect Top-2 and Top-4 accuracy and reached the highest PR-AUC overall.
+
+### Season-by-Season Champion Predictions
+Below is the exact comparison between the model’s predicted champions and the true winners:
+
+| Season   | Predicted Team | Pred Prob | True Champion | Correct |
+| -------- | -------------- | --------- | ------------- | ------- |
+| **2016** | Warriors       | 0.5212    | Cavaliers     | 0       |
+| **2017** | Warriors       | 0.7397    | Warriors      | 1       |
+| **2018** | Warriors       | 0.4835    | Warriors      | 1       |
+| **2019** | Raptors        | 0.8410    | Raptors       | 1       |
+| **2020** | Bucks          | 0.0783    | Lakers        | 0       |
+| **2021** | Clippers       | 0.0436    | Bucks         | 0       |
+| **2022** | Warriors       | 0.7102    | Warriors      | 1       |
+| **2023** | Nuggets        | 0.7608    | Nuggets       | 1       |
+| **2024** | Celtics        | 0.8998    | Celtics       | 1       |
+| **2025** | Thunder        | 0.8415    | Thunder       | 1       |
+
+### Summary
+- Correct in 7 of 10 seasons
+- All mistakes ranked the true champion within the Top-4
+- Most confident correct predictions: Celtics 2024 (0.8998) and Thunder 2025 (0.8415)
+  
+This is the strongest performance of all models used in the project.
+
+### Top-K Accuracy Summary
+| Metric             | Value  |
+| ------------------ | ------ |
+| **Top-1 Accuracy** | 0.7000 |
+| **Top-2 Accuracy** | 1.0000 |
+| **Top-4 Accuracy** | 1.0000 |
+
+The Random Forest was the only model to achieve perfect Top-2 and Top-4 accuracy, and tied for the best Top-1 performance.
+
+### Predicted Champions (2016–2025):
+
+Correct in 7 of 10 season, matching the Softmax NN and Ensemble.
+
+## 2026 Champion Predicition:
 Thunder with probability 0.993
 
-This is the sharpest probability distrubution among all models.
+(This is the sharpest probability distrubution among all models.)
 
 ## Final Model Comparison
 | Model                 | PR-AUC    | Top-1    | Top-2    | Top-4    | Notes                      |
