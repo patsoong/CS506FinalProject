@@ -9,6 +9,28 @@ Our workflow involves **data processing**, **feature engineering**, **explorator
 
 ---
 
+# How to run the Makefile
+
+## 1. Create Virtual Environment + Install Dependencies
+
+This command creates a fresh virtual environment (venv/) and installs everything in requirements.txt:
+
+make install
+
+## 2. Open the Main Notebook (All Models + Visualizations)
+
+To launch the full project notebook:
+
+make 
+
+## 3. Open Only the Neural Network Notebook
+
+If someone wants to run only the softmax neural network:
+
+make nn
+
+---
+
 ## Data Visualization
 
 For the exploratory analysis portion of this project, we focused on identifying patterns that distinguish championship-winning NBA teams from non-champions and understanding how league competitiveness has evolved over time.  
@@ -352,22 +374,7 @@ XGBoost is used primarily as a ranking model, generating probability-like scores
 
 XGBoost consistently assigns the highest likelihood to Oklahoma City for the upcoming season.
 
-## 5. Stacking Ensemble (LogReg + XGBoost)
-
-Combines the interpretability of Logistic Regression with the nonlinear predictive power of XGBoost.
-
-### Performance:
-| Metric         | Score    |
-| -------------- | -------- |
-| ROC-AUC        | 0.9807   |
-| PR-AUC         | 0.7740   |
-| Top-1 Accuracy | **0.70** |
-| Top-2 Accuracy | 0.90     |
-| Top-4 Accuracy | 1.00     |
-
-The model is consistent and robust, tying RF and Softmax NN for best Top-1 accuracy.
-
-## 6. Random Forest Classifier (Final Version — Best Model Overall)
+## 5. Random Forest Classifier (Final Version — Best Model Overall)
 
 Based on our full evaluation pipeline and the results shown in the final Random Forest notebook, the Random Forest Classifier was the strongest and most reliable model in the project. It delivered the highest PR-AUC of all classical ML models, perfect Top-2 and Top-4 accuracy, and tied for the best Top-1 accuracy.
 
