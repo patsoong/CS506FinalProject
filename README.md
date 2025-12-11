@@ -1,4 +1,5 @@
 [Midterm Report Video](https://youtu.be/CUzXF3BefUc)
+[Final Report Video](https://youtu.be/CUzXF3BefUc)
 
 ---
 
