@@ -222,3 +222,205 @@ These results are **promising**, given the rarity of championships and the datas
 Future work will involve applying **tree-based models** and **neural networks** to capture nonlinear relationships and enhance predictive performance.
 
 ---
+
+# Final Project Additions: Post-Midterm Modeling & Results
+
+## Roadmap From Midterm → Final Project
+After completing the midterm work—which focused on data cleaning, feature engineering, PCA, exploratory visualizations, and baseline logistic regression—we expanded the project to include six advanced models, new season-relative features, more realistic temporal evaluation, and ranking-based performance metrics.
+These additions move the project from “proof of concept” into a full championship forecasting system, allowing us to evaluate predictions for unseen future seasons and generate full-league rankings for 2026 and beyond.
+
+### Why Temporal Splitting Was Required (Train ≤2015 → Test ≥2016)
+Random train/test splits allow the model to “cheat” by learning patterns from future seasons.
+This is unrealistic because:
+- team styles, pace, and scoring change dramatically across eras
+- modern teams (2020s) should never influence predictions about the 1990s
+- championship frequency is extremely rare—future examples should not leak backward
+
+To simulate true NBA forecasting, we used:
+
+Training data: 1985–2015  
+Test data: 2016–2025
+
+This forces the model to generalize historically, just like a real analyst predicting future champions.
+
+---
+
+## Why We Switched to Ranking Metrics (Top-K Accuracy & PR-AUC)
+
+Predicting a single NBA champion out of 30 teams is not a normal classification problem.
+
+Binary metrics (accuracy, ROC-AUC) are misleading because:
+- 29 out of 30 teams are non-champions
+- a model can get 97% accuracy by predicting “no champion” for all teams
+- ROC-AUC treats all pairs equally, even though only one team matters each season
+
+### To address this, we use ranking metrics:
+
+### Top-K Accuracy (K = 1, 2, 4)
+- Top-1: Did the model correctly pick the champion?
+- Top-2: Did the model’s “finals” contenders include the champion?
+- Top-4: Did the model include the champion in its “semifinals”?
+
+### Average Precision (PR-AUC)
+
+Measures probability concentration on the true champion—perfect for rare-event prediction.
+
+These metrics match playoff structure and reflect realistic forecasting.
+
+---
+## Additional Feature Engineering After Midterm
+
+To make models era-robust and context-aware, we engineered new features capturing season-relative performance, solving issues caused by changing league averages over decades.
+
+### Season Percentile Rank (feature_season_rank)
+Normalizes each stat relative to the league within that season.
+
+Example:
+A +6 point differential may be elite in 2004 but average in 2024.
+Percentile rank removes era bias.
+
+### Season Z-Score (feature_season_zscore)
+Represents how many standard deviations above/below league average a team is.
+
+### Missing Value Handling
+Used median imputation to ensure robustness with large feature sets.
+
+### Probability Calibration
+Tree-based models (RF, XGBoost) can produce uncalibrated scores.
+We applied sigmoid calibration to turn outputs into meaningful probabilities.
+These additions improved performance across all models, especially Random Forest and Softmax NN.
+
+## Final Models and Results
+
+Below are the six models trained after the midterm, each evaluated under temporal splitting.
+
+## 1. Logistic Regression (Final Evaluation)
+
+Logistic Regression remains a strong interpretable baseline.
+
+Performace (2016-2025):
+| Metric         | Score  |
+| -------------- | ------ |
+| ROC-AUC        | 0.9817 |
+| PR-AUC         | 0.7043 |
+| Top-1 Accuracy | 0.60   |
+| Top-2 Accuracy | 0.90   |
+| Top-4 Accuracy | 1.00   |
+
+Despite its simplicity, it correctly ranks the true champion in the top 4 every year.
+
+## 2. Support Vector Machine (RBF Kernel)
+
+The SVM captures nonlinear boundaries between champions and non-champions.
+
+Performance:
+| Metric         | Score  |
+| -------------- | ------ |
+| ROC-AUC        | 0.9717 |
+| PR-AUC         | 0.5226 |
+| Top-1 Accuracy | 0.50   |
+| Top-2 Accuracy | 0.90   |
+| Top-4 Accuracy | 1.00   |
+
+It struggles with probability sharpness but performs extremely well for semifinal predictions.
+
+## 3. Random Forest Classifier (Final Version With Season-Relative Features)
+
+This updated Random Forest is one of our strongest final models.
+
+### Technical Improvements
+- 5000 trees for stability
+- Balanced class weights
+- Season percentile ranks & z-scores
+- Median imputation
+- Sigmoid probability calibration
+
+### Performance (Final RF Model):
+| Metric          | Score    |
+| --------------- | -------- |
+| ROC-AUC         | 0.9879   |
+| PR-AUC          | 0.8336   |
+| Binary Accuracy | 0.9833   |
+| Top-1 Accuracy  | **0.70** |
+| Top-2 Accuracy  | **1.00** |
+| Top-4 Accuracy  | **1.00** |
+
+### Predicted Champions (2016–2025):
+
+Correct in 7 of 10 season, matching the Softmax NN and Ensemble.
+
+### Visualizations
+<p align="center"> <img src="images/XGBOOST.png" width="500"/> </p> <p align="center"> <img src="images/XGBOOST1.png" width="500"/> </p> <p align="center"> <img src="images/XGBOOST2.png" width="500"/> </p>
+
+(These visualizations show Top-4 predictions, Top-K accuracy, and champion ranking across the ranking pipeline used by RF/XGBoost/Ensemble.)
+
+## 4. XGBoost (Full League Ranking + 2026 Predictions)
+
+XGBoost is used primarily as a ranking model, generating probability-like scores for all 30 teams.
+
+### Why XGBoost Works Well
+- Handles feature interactions
+- Handles nonlinear relationships
+- Extremely strong on structured tabular data
+- Produces smooth, calibrated ranking scores
+
+### 2026 Championship Prediction (Top-4):
+1. Thunder
+2. Raptors
+3. Rockets
+4. Pistons
+
+XGBoost consistently assigns the highest likelihood to Oklahoma City for the upcoming season.
+
+## 5. Stacking Ensemble (LogReg + XGBoost)
+
+Combines the interpretability of Logistic Regression with the nonlinear predictive power of XGBoost.
+
+### Performance:
+| Metric         | Score    |
+| -------------- | -------- |
+| ROC-AUC        | 0.9807   |
+| PR-AUC         | 0.7740   |
+| Top-1 Accuracy | **0.70** |
+| Top-2 Accuracy | 0.90     |
+| Top-4 Accuracy | 1.00     |
+
+The model is consistent and robust, tying RF and Softmax NN for best Top-1 accuracy.
+
+## 6. Softmax Neural Network (Multiclass Probability Model)
+
+Produces a 30-team probability distribution, learning nonlinear patterns directly.
+
+### Performance:
+| Metric            | Score                             |
+| ----------------- | --------------------------------- |
+| Top-1 Accuracy    | **0.70**                          |
+| Average Precision | **0.784** (highest of all models) |
+
+### 2026 Champion Predicition:
+Thunder with probability 0.993
+
+This is the sharpest probability distrubution among all models.
+
+## Final Model Comparison
+| Model                 | PR-AUC    | Top-1    | Top-2    | Top-4    | Notes                      |
+| --------------------- | --------- | -------- | -------- | -------- | -------------------------- |
+| Logistic Regression   | 0.704     | 0.60     | 0.90     | 1.00     | Linear baseline            |
+| SVM                   | 0.523     | 0.50     | 0.90     | 1.00     | Nonlinear margin           |
+| **Random Forest**     | **0.834** | **0.70** | **1.00** | **1.00** | Best overall               |
+| XGBoost               | —         | Ranking  | —        | —        | Best league-wide ranker    |
+| **Stacking Ensemble** | **0.774** | **0.70** | 0.90     | 1.00     | Consistent                 |
+| **Softmax NN**        | **0.784** | **0.70** | —        | —        | Best probability sharpness |
+
+## Conclusion & Future Work
+- Our best-performing models (Random Forest, Stacking Ensemble, Softmax NN) reached 70% Top-1 accuracy and 100% Top-4 accuracy, demonstrating that championships are surprisingly predictable with engineered features.
+- Season-relative normalization significantly improves all models by removing era bias.
+- Ranking metrics (Top-K accuracy, PR-AUC) are essential for rare-event prediction.
+  
+### For future work, we can:
+- incorporate player-level and lineup-level data
+- integrate injury and roster transactions
+- explore graph neural networks for team interaction modeling
+- simulate playoff brackets rather than single-season predictions
+
+Overall, the project successfully transitions from simple logistic models to sophisticated ranking systems, producing genuine predictive insights into NBA championship outcomes.
