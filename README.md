@@ -353,8 +353,8 @@ Produces a 30-team probability distribution, learning nonlinear patterns directl
 ### Performance:
 | Metric            | Score                             |
 | ----------------- | --------------------------------- |
-| Top-1 Accuracy    | **0.70**                          |
-| Average Precision | **0.784**                         |
+| Top-1 Accuracy    | **0.60**                          |
+| Average Precision | **0.725**                         |
 
 ## 4. XGBoost (Full League Ranking + 2026 Predictions)
 
@@ -365,6 +365,14 @@ XGBoost is used primarily as a ranking model, generating probability-like scores
 - Handles nonlinear relationships
 - Extremely strong on structured tabular data
 - Produces smooth, calibrated ranking scores
+
+### Performance:
+| Metric         | Score  |
+| -------------- | ------ |
+| PR-AUC         | 0.761 |
+| Top-1 Accuracy | 0.7   |
+| Top-2 Accuracy | 0.8 |
+| Top-4 Accuracy | 1.00   |
 
 ### 2026 Championship Prediction (Top-4):
 1. Thunder
