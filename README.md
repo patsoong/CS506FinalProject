@@ -439,14 +439,14 @@ Thunder with probability 0.993
 (This is the sharpest probability distrubution among all models.)
 
 ## Final Model Comparison
-| Model                 | PR-AUC    | Top-1    | Top-2    | Top-4    |                      |
-| --------------------- | --------- | -------- | -------- | -------- | ------------------ |
-| Logistic Regression   | 0.704     | 0.60     | 0.90     | 1.00     |              |
-| SVM                   | 0.523     | 0.50     | 0.90     | 1.00     |          |
-| **Random Forest**     | **0.834** | **0.70** | **1.00** | **1.00** |               |
-| XGBoost               | —         | Ranking  | —        | —        |     |
-             |
-| **Softmax NN**        | **0.725** | **0.6** | —        | —        |  |
+| **Model**              | **PR-AUC** | **Top-1 Accuracy** | **Top-2 Accuracy** | **Top-4 Accuracy** |
+| ---------------------- | ---------- | ------------------ | ------------------ | ------------------ |
+| Logistic Regression    | 0.704      | 0.60               | 0.90               | 1.00               |
+| SVM (RBF Kernel)       | 0.523      | 0.50               | 0.90               | 1.00               |
+| Random Forest          | **0.834**  | **0.70**           | **1.00**           | **1.00**           |
+| XGBoost                | .761       | .7                 | .8                 | 1                  |
+| Softmax Neural Network | **0.725**  | **0.60**           | —                  | —                  |
+
 
 ## Conclusion & Future Work
 - Our best-performing models (Random Forest, Stacking Ensemble, Softmax NN) reached 70% Top-1 accuracy and 100% Top-4 accuracy, demonstrating that championships are surprisingly predictable with engineered features.
