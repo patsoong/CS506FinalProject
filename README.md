@@ -120,16 +120,83 @@ We implemented a structured **data-processing workflow** for preparing the NBA t
 
 ### Data Cleaning and Integration
 
-The cleaning and integration process converted raw game-level data into a unified season-level dataset, merging multiple Kaggle and Basketball Reference sources into a single consistent file.
+The raw data used in this project came from multiple Kaggle datasets and supplemental tables from Basketball Reference. These sources contained detailed game-level and team-level statistics, but they were not immediately usable for machine learning.
 
-**Key steps:**
-- Loaded and standardized raw CSVs (`games`, `team_stats`)  
-- Extracted season year and computed win percentages  
-- Merged per-game stats with season-level records  
-- Aggregated the dataset to one row per team per season  
-- Returned a unified dataset via `build_full_dataset()`  
+**The Kaggle data included:**
+- Game logs (every regular-season and playoff game)
+- Basic and advanced team statistics
+- Opponent statistics
+- Strength of schedule metrics
+- Possession-based efficiency data
+- League-wide summary tables
 
-This process resulted in a clean dataset ready for feature engineering and modeling.
+While rich, this data was spread across multiple CSVs, used different naming conventions, and sometimes duplicated the same metrics at game-level and season-level. A major cleaning and integration effort was required to convert these raw files into a single, consistent dataset.
+
+### Why We Needed to Feature Engineer the Dataset
+
+The original Kaggle dataset provides raw counts and percentages, but championship prediction requires interpreting team performance relative to the league, not just in isolation.
+
+For example:
+- A team scoring 110 points per game means very different things in 1990 versus 2020 because league scoring environments changed dramatically.
+- Raw rebound totals don’t reflect pace differences or whether the team actually controlled possession better than its opponents.
+- Strength of schedule (SOS) and net rating require calculations across entire seasons, not single games.
+  
+Feature engineering allowed us to:
+- Standardize metrics across eras
+- Capture efficiency instead of raw totals
+- Represent dominance, balance, and consistency
+- Describe teams relative to their specific season
+  
+This step dramatically improved the quality of signals available to the models.
+
+### What the Statistical Terms Mean (Glossary)
+
+To make the dataset interpretable, here are short definitions of the key metrics included in the Kaggle dataset and used in our feature engineering:
+- SOS (Strength of Schedule)
+Measures how difficult a team’s opponents were on average.
+Positive = tougher schedule, negative = easier.
+- Offensive Rating (ORtg)
+Points scored per 100 possessions — measures scoring efficiency.
+- Defensive Rating (DRtg)
+Points allowed per 100 possessions — lower is better.
+- Net Rating
+ORtg − DRtg
+One of the strongest predictors of team dominance.
+- Pace
+Estimated number of possessions per game.
+Needed for era normalization.
+- eFG% (Effective Field Goal Percentage)
+Adjusts FG% to give extra credit for 3-pointers.
+- TS% (True Shooting Percentage)
+Efficiency metric including 2P, 3P, and free throws.
+- ORB% / DRB% (Offensive & Defensive Rebound Percentage)
+Measures how many available rebounds a team secures.
+- Assist Ratio / Turnover Ratio
+Measures ball movement and ball security per 100 possessions.
+- Average Point Differential (avg_point_diff)
+Points scored minus points allowed per game — one of the most important predictors of championships.
+
+These metrics were originally dispersed and sometimes inconsistent across CSVs, so consolidating and recomputing them was essential.
+
+### Cleaning & Integration Steps (Expanded)
+After investigating all raw files, we merged and cleaned the data through the following major steps:
+1. Loaded and standardized raw CSVs: 
+Converted naming conventions (e.g., “Team” vs “team_name”)
+Ensured join keys matched across datasets
+Standardized season formats (e.g., “1995–96” → “1996”)
+2. Extracted season-level features: 
+Computed win percentage, total wins, losses
+Aggregated per-game data into per-season summaries
+Removed playoff games to ensure training data uses only pre-championship info
+3. Merged game statistics with team-level advanced metrics:
+Recombined ORtg/DRtg, pace, eFG%, TS%, rebound percentages
+Merged opponent-adjusted statistics
+Integrated strength-of-schedule tables
+4. Consolidated dataset to one row per team per season
+This ensured each row corresponds to a single prediction target.
+5. Returned final unified dataset
+
+This final dataset contains all raw, engineered, and season-normalized features used by our models.
 
 ---
 
