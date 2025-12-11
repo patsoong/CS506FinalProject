@@ -332,7 +332,7 @@ Produces a 30-team probability distribution, learning nonlinear patterns directl
 | Metric            | Score                             |
 | ----------------- | --------------------------------- |
 | Top-1 Accuracy    | **0.70**                          |
-| Average Precision | **0.784** (highest of all models) |
+| Average Precision | **0.784**                         |
 
 ## 4. XGBoost (Full League Ranking + 2026 Predictions)
 
@@ -439,14 +439,14 @@ Thunder with probability 0.993
 (This is the sharpest probability distrubution among all models.)
 
 ## Final Model Comparison
-| Model                 | PR-AUC    | Top-1    | Top-2    | Top-4    | Notes                      |
-| --------------------- | --------- | -------- | -------- | -------- | -------------------------- |
-| Logistic Regression   | 0.704     | 0.60     | 0.90     | 1.00     | Linear baseline            |
-| SVM                   | 0.523     | 0.50     | 0.90     | 1.00     | Nonlinear margin           |
-| **Random Forest**     | **0.834** | **0.70** | **1.00** | **1.00** | Best overall               |
-| XGBoost               | —         | Ranking  | —        | —        | Best league-wide ranker    |
-| **Stacking Ensemble** | **0.774** | **0.70** | 0.90     | 1.00     | Consistent                 |
-| **Softmax NN**        | **0.784** | **0.70** | —        | —        | Best probability sharpness |
+| Model                 | PR-AUC    | Top-1    | Top-2    | Top-4    |                      |
+| --------------------- | --------- | -------- | -------- | -------- | ------------------ |
+| Logistic Regression   | 0.704     | 0.60     | 0.90     | 1.00     |              |
+| SVM                   | 0.523     | 0.50     | 0.90     | 1.00     |          |
+| **Random Forest**     | **0.834** | **0.70** | **1.00** | **1.00** |               |
+| XGBoost               | —         | Ranking  | —        | —        |     |
+             |
+| **Softmax NN**        | **0.725** | **0.6** | —        | —        |  |
 
 ## Conclusion & Future Work
 - Our best-performing models (Random Forest, Stacking Ensemble, Softmax NN) reached 70% Top-1 accuracy and 100% Top-4 accuracy, demonstrating that championships are surprisingly predictable with engineered features.
