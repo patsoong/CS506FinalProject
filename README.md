@@ -170,7 +170,7 @@ We used **Scikit-learn** to split data, train models, and evaluate performance.
 
 ---
 
-### Future Work
+### Post-Midterm Report Work
 
 We plan to implement **Random Forests**, **XGBoost**, and potentially a **Neural Network** to capture nonlinear relationships and further improve predictive accuracy.
 
