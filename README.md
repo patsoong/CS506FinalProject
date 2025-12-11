@@ -392,7 +392,6 @@ Based on our full evaluation pipeline and the results shown in the final Random 
 | --------------- | -------- |
 | ROC-AUC         | 0.9879   |
 | PR-AUC          | 0.8336   |
-| Binary Accuracy | 0.9833   |
 | Top-1 Accuracy  | **0.70** |
 | Top-2 Accuracy  | **1.00** |
 | Top-4 Accuracy  | **1.00** |
