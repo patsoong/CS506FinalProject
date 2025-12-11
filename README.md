@@ -354,7 +354,7 @@ Produces a 30-team probability distribution, learning nonlinear patterns directl
 | Metric            | Score                             |
 | ----------------- | --------------------------------- |
 | Top-1 Accuracy    | **0.60**                          |
-| Average Precision | **0.725**                         |
+| PR-AUC            | **0.725**                         |
 
 ## 4. XGBoost (Full League Ranking + 2026 Predictions)
 
@@ -373,14 +373,6 @@ XGBoost is used primarily as a ranking model, generating probability-like scores
 | Top-1 Accuracy | 0.7   |
 | Top-2 Accuracy | 0.8 |
 | Top-4 Accuracy | 1.00   |
-
-### 2026 Championship Prediction (Top-4):
-1. Thunder
-2. Raptors
-3. Rockets
-4. Pistons
-
-XGBoost consistently assigns the highest likelihood to Oklahoma City for the upcoming season.
 
 ## 5. Random Forest Classifier (Final Version — Best Model Overall)
 
@@ -454,7 +446,7 @@ Thunder with probability 0.993
 | Logistic Regression    | 0.704      | 0.60               | 0.90               | 1.00               |
 | SVM (RBF Kernel)       | 0.523      | 0.50               | 0.90               | 1.00               |
 | Random Forest          | **0.834**  | **0.70**           | **1.00**           | **1.00**           |
-| XGBoost                | .761       | .7                 | .8                 | 1                  |
+| XGBoost                | 0.761      |  0.7               | 0.8                | 1                  |
 | Softmax Neural Network | **0.725**  | **0.60**           | —                  | —                  |
 
 
