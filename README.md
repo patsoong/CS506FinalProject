@@ -120,13 +120,12 @@ We implemented a structured **data-processing workflow** for preparing the NBA t
 
 ### Data Cleaning and Integration
 
-The raw data used in this project came from multiple Kaggle datasets and supplemental tables from Basketball Reference. These sources contained detailed game-level and team-level statistics, but they were not immediately usable for machine learning.
+The raw data used in this project came from multiple Kaggle datasets. These sources contained detailed game-level and team-level statistics, but they were not immediately usable for machine learning.
 
 **The Kaggle data included:**
 - Game logs (every regular-season and playoff game)
 - Basic and advanced team statistics
 - Opponent statistics
-- Strength of schedule metrics
 - Possession-based efficiency data
 - League-wide summary tables
 
@@ -146,6 +145,7 @@ Feature engineering allowed us to:
 - Capture efficiency instead of raw totals
 - Represent dominance, balance, and consistency
 - Describe teams relative to their specific season
+- Strength of schedule metrics
   
 This step dramatically improved the quality of signals available to the models.
 
