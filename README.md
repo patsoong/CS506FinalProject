@@ -140,13 +140,6 @@ For example:
 - Raw rebound totals don’t reflect pace differences or whether the team actually controlled possession better than its opponents.
 - Strength of schedule (SOS) and net rating require calculations across entire seasons, not single games.
   
-Feature engineering allowed us to:
-- Standardize metrics across eras
-- Capture efficiency instead of raw totals
-- Represent dominance, balance, and consistency
-- Describe teams relative to their specific season
-- Strength of schedule metrics
-  
 This step dramatically improved the quality of signals available to the models.
 
 ### What the Statistical Terms Mean (Glossary)
