@@ -438,7 +438,7 @@ This is the strongest performance of all models used in the project.
 - Ranking metrics (Top-K Accuracy, PR-AUC) were effective, since only one team per season is a champion, and standard accuracy is misleading.
 - The strongest models correctly identified nearly all true contenders, showing that championships are more predictable than expected when using engineered features and ranking-based evaluation.
 - Overall, Random Forest was the best model as it consistently delivered the highest predictive accuracy, and correctly ranked every true champion within the Top-4
-- 
+
   
 ### For future work, we can:
 - incorporate player-level and lineup-level data
