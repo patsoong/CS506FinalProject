@@ -437,7 +437,7 @@ This is the strongest performance of all models used in the project.
 - Implemented temporal train and test splits to ensure realistic forecasting and prevent leakage
 - Ranking metrics (Top-K Accuracy, PR-AUC) were effective, since only one team per season is a champion, and standard accuracy is misleading.
 - The strongest models correctly identified nearly all true contenders, showing that championships are more predictable than expected when using engineered features and ranking-based evaluation.
-- Overall, Random Forest was the best model as it consistently delivered the highest predictive accuracy, and correctly ranked every true champion within the Top-4
+- Overall, Random Forest was the best model as it consistently delivered the highest predictive accuracy and precision, while correctly ranking every true champion within the Top-4
 
   
 ### For future work, we can:
@@ -445,6 +445,3 @@ This is the strongest performance of all models used in the project.
 - integrate injury and roster transactions
 - engineer stronger nonlinear features to capture more data
 - simulate playoff brackets rather than single-season predictions
-
-Overall, the project successfully transitions from simple logistic models to sophisticated ranking systems, producing genuine predictive insights into NBA championship outcomes.
-
