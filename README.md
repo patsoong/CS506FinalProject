@@ -430,10 +430,6 @@ This is the strongest performance of all models used in the project.
   <img src="images/randomforst2.png" alt="Random Forest: Top-K Accuracy Curve" width="800"/>
 </p>
 
-### Predicted Champions (2016–2025):
-
-Correct in 7 of 10 season, matching the Softmax NN and Ensemble.
-
 ## 2026 Champion Predicition:
 Thunder with probability 0.993
 
