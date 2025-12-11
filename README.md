@@ -312,7 +312,11 @@ Most confident correct predictions: 2024 Celtics (0.900) and 2025 Thunder (0.841
 <p align="center"> <img src="images/randomforest.png" alt="Random Forest: Top-4 Predictions per Season (Semifinals)" width="500"/> </p> <p align="center"> <img src="images/randomforst2.png" alt="Random Forest: Top-K Accuracy Curve" width="800"/> </p>
 
 ## 2026 Prediction
-Random forest predicted that Thunder would win the 2026 NBA Championship based on the current season data so far. Obviously, a more accurate prediction would be given at the end of the regular season but because of our current time of the year, this is the best we can do.
+Random forest predicted that Thunder would win the 2026 NBA Championship based on the current season data so far. Obviously, a more accurate prediction would be given at the end of the regular season but because of our current time of the year, this is the best we can do. The following are the top 4 predictions:
+1. Thunder
+2. Pistons
+3. Raptors
+4. Rockets
 
 ## Conclusion & Future Work
 - We built numerous NBA championship prediction models using season-level team statistics from 1985-2025
