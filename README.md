@@ -352,11 +352,6 @@ XGBoost is used primarily as a ranking model, generating probability-like scores
 
 XGBoost consistently assigns the highest likelihood to Oklahoma City for the upcoming season.
 
-### Visualizations
-<p align="center"> <img src="images/XGBOOST.png" width="500"/> </p> <p align="center"> <img src="images/XGBOOST1.png" width="500"/> </p> <p align="center"> <img src="images/XGBOOST2.png" width="500"/> </p>
-
-(These visualizations show Top-4 predictions, Top-K accuracy, and champion ranking across the ranking pipeline used by RF/XGBoost/Ensemble.)
-
 ## 5. Stacking Ensemble (LogReg + XGBoost)
 
 Combines the interpretability of Logistic Regression with the nonlinear predictive power of XGBoost.
@@ -420,14 +415,14 @@ Below is the exact comparison between the model’s predicted champions and the 
   
 This is the strongest performance of all models used in the project.
 
-### Top-K Accuracy Summary
-| Metric             | Value  |
-| ------------------ | ------ |
-| **Top-1 Accuracy** | 0.7000 |
-| **Top-2 Accuracy** | 1.0000 |
-| **Top-4 Accuracy** | 1.0000 |
+### Visualizations
+<p align="center">
+  <img src="images/randomforest.png" alt="Random Forest: Top-4 Predictions per Season (Semifinals)" width="500"/>
+</p>
 
-The Random Forest was the only model to achieve perfect Top-2 and Top-4 accuracy, and tied for the best Top-1 performance.
+<p align="center">
+  <img src="images/randomforst2.png" alt="Random Forest: Top-K Accuracy Curve" width="800"/>
+</p>
 
 ### Predicted Champions (2016–2025):
 
