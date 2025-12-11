@@ -31,6 +31,76 @@ make nn
 
 ---
 
+## Data Processing
+
+We implemented a structured **data-processing workflow** for preparing the NBA team data for modeling and predictive analysis through **data cleaning and integration** and **feature engineering**.
+
+---
+
+### Data Cleaning and Integration
+
+The raw data used in this project came from multiple Kaggle datasets. These sources contained detailed game-level and team-level statistics, but they were not immediately usable for machine learning.
+
+**The Kaggle data included:**
+- Game logs (every regular-season and playoff game)
+- Basic and advanced team statistics
+- Opponent statistics
+- Possession-based efficiency data
+- League-wide summary tables
+
+While rich, this data was spread across multiple CSVs, used different naming conventions, and sometimes duplicated the same metrics at game-level and season-level. A major cleaning and integration effort was required to convert these raw files into a single, consistent dataset.
+
+### What the Statistical Terms Mean (Glossary)
+
+To make the dataset interpretable, here are short definitions of the key metrics included in the Kaggle dataset and used in our feature engineering:
+- SOS (Strength of Schedule)
+Measures how difficult a team’s opponents were on average.
+Positive = tougher schedule, negative = easier.
+- Offensive Rating (ORtg)
+Points scored per 100 possessions — measures scoring efficiency.
+- Defensive Rating (DRtg)
+Points allowed per 100 possessions — lower is better.
+- Net Rating
+ORtg − DRtg
+One of the strongest predictors of team dominance.
+- Pace
+Estimated number of possessions per game.
+Needed for era normalization.
+- eFG% (Effective Field Goal Percentage)
+Adjusts FG% to give extra credit for 3-pointers.
+- TS% (True Shooting Percentage)
+Efficiency metric including 2P, 3P, and free throws.
+- ORB% / DRB% (Offensive & Defensive Rebound Percentage)
+Measures how many available rebounds a team secures.
+- Assist Ratio / Turnover Ratio
+Measures ball movement and ball security per 100 possessions.
+- Average Point Differential (avg_point_diff)
+Points scored minus points allowed per game — one of the most important predictors of championships.
+
+These metrics were originally dispersed and sometimes inconsistent across CSVs, so consolidating and recomputing them was essential.
+
+### Cleaning & Integration Steps (Expanded)
+After investigating all raw files, we merged and cleaned the data through the following major steps:
+1. Loaded and standardized raw CSVs: 
+Converted naming conventions (e.g., “Team” vs “team_name”)
+Ensured join keys matched across datasets
+Standardized season formats (e.g., “1995–96” → “1996”)
+2. Extracted season-level features: 
+Computed win percentage, total wins, losses
+Aggregated per-game data into per-season summaries
+Removed playoff games to ensure training data uses only pre-championship info
+3. Merged game statistics with team-level advanced metrics:
+Recombined ORtg/DRtg, pace, eFG%, TS%, rebound percentages
+Merged opponent-adjusted statistics
+Integrated strength-of-schedule tables
+4. Consolidated dataset to one row per team per season
+This ensured each row corresponds to a single prediction target.
+5. Returned final unified dataset
+
+This final dataset contains all raw, engineered, and season-normalized features used by our models.
+
+---
+
 ## Data Visualization
 
 For the exploratory analysis portion of this project, we focused on identifying patterns that distinguish championship-winning NBA teams from non-champions and understanding how league competitiveness has evolved over time.  
@@ -112,87 +182,6 @@ This analysis highlighted a small set of metrics that truly separate championshi
 
 ---
 
-## Data Processing
-
-We implemented a structured **data-processing workflow** for preparing the NBA team data for modeling and predictive analysis through **data cleaning and integration**, **feature engineering**, and **principal component analysis (PCA)**.
-
----
-
-### Data Cleaning and Integration
-
-The raw data used in this project came from multiple Kaggle datasets. These sources contained detailed game-level and team-level statistics, but they were not immediately usable for machine learning.
-
-**The Kaggle data included:**
-- Game logs (every regular-season and playoff game)
-- Basic and advanced team statistics
-- Opponent statistics
-- Possession-based efficiency data
-- League-wide summary tables
-
-While rich, this data was spread across multiple CSVs, used different naming conventions, and sometimes duplicated the same metrics at game-level and season-level. A major cleaning and integration effort was required to convert these raw files into a single, consistent dataset.
-
-### Why We Needed to Feature Engineer the Dataset
-
-The original Kaggle dataset provides raw counts and percentages, but championship prediction requires interpreting team performance relative to the league, not just in isolation.
-
-For example:
-- A team scoring 110 points per game means very different things in 1990 versus 2020 because league scoring environments changed dramatically.
-- Raw rebound totals don’t reflect pace differences or whether the team actually controlled possession better than its opponents.
-- Strength of schedule (SOS) and net rating require calculations across entire seasons, not single games.
-  
-This step dramatically improved the quality of signals available to the models.
-
-### What the Statistical Terms Mean (Glossary)
-
-To make the dataset interpretable, here are short definitions of the key metrics included in the Kaggle dataset and used in our feature engineering:
-- SOS (Strength of Schedule)
-Measures how difficult a team’s opponents were on average.
-Positive = tougher schedule, negative = easier.
-- Offensive Rating (ORtg)
-Points scored per 100 possessions — measures scoring efficiency.
-- Defensive Rating (DRtg)
-Points allowed per 100 possessions — lower is better.
-- Net Rating
-ORtg − DRtg
-One of the strongest predictors of team dominance.
-- Pace
-Estimated number of possessions per game.
-Needed for era normalization.
-- eFG% (Effective Field Goal Percentage)
-Adjusts FG% to give extra credit for 3-pointers.
-- TS% (True Shooting Percentage)
-Efficiency metric including 2P, 3P, and free throws.
-- ORB% / DRB% (Offensive & Defensive Rebound Percentage)
-Measures how many available rebounds a team secures.
-- Assist Ratio / Turnover Ratio
-Measures ball movement and ball security per 100 possessions.
-- Average Point Differential (avg_point_diff)
-Points scored minus points allowed per game — one of the most important predictors of championships.
-
-These metrics were originally dispersed and sometimes inconsistent across CSVs, so consolidating and recomputing them was essential.
-
-### Cleaning & Integration Steps (Expanded)
-After investigating all raw files, we merged and cleaned the data through the following major steps:
-1. Loaded and standardized raw CSVs: 
-Converted naming conventions (e.g., “Team” vs “team_name”)
-Ensured join keys matched across datasets
-Standardized season formats (e.g., “1995–96” → “1996”)
-2. Extracted season-level features: 
-Computed win percentage, total wins, losses
-Aggregated per-game data into per-season summaries
-Removed playoff games to ensure training data uses only pre-championship info
-3. Merged game statistics with team-level advanced metrics:
-Recombined ORtg/DRtg, pace, eFG%, TS%, rebound percentages
-Merged opponent-adjusted statistics
-Integrated strength-of-schedule tables
-4. Consolidated dataset to one row per team per season
-This ensured each row corresponds to a single prediction target.
-5. Returned final unified dataset
-
-This final dataset contains all raw, engineered, and season-normalized features used by our models.
-
----
-
 ## Feature Engineering
 
 The feature engineering stage transformed both raw and processed NBA data into a clean, consistent, and informative dataset optimized for championship prediction.  
@@ -214,26 +203,23 @@ After cleaning and processing, the resulting dataset
 **`data/processed/team_season_features_v2_clean-2.csv`**  
 served as the input for modeling experiments, enabling models like Logistic Regression and XGBoost to identify patterns correlated with championship success.
 
----
+### Why We Needed to Feature Engineer the Dataset
 
-## Principal Component Analysis (PCA)
+The original Kaggle dataset provides raw counts and percentages, but championship prediction requires interpreting team performance relative to the league, not just in isolation.
 
-We used PCA to reduce feature redundancy and multicollinearity among performance metrics.  
-Since many basketball stats are correlated (e.g., points, assists, rebounds), PCA transformed them into uncorrelated components that preserve most of the variance.
-
-**Implementation details:**
-- Preserved **90% of total variance**  
-- Represented each team-season as a single row  
-- Produced principal components as weighted mixtures of original stats  
-
-This reduced dataset simplified analysis while preserving the structure of team performance.
+For example:
+- A team scoring 110 points per game means very different things in 1990 versus 2020 because league scoring environments changed dramatically.
+- Raw rebound totals don’t reflect pace differences or whether the team actually controlled possession better than its opponents.
+- Strength of schedule (SOS) and net rating require calculations across entire seasons, not single games.
+  
+This step dramatically improved the quality of signals available to the models.
 
 ---
 
 # Final Project Additions: Post-Midterm Modeling & Results
 
 ## Roadmap From Midterm → Final Project
-After completing the midterm work—which focused on data cleaning, feature engineering, PCA, exploratory visualizations, and baseline logistic regression—we expanded the project to include six advanced models, new season-relative features, more realistic temporal evaluation, and ranking-based performance metrics.
+After completing the midterm work—which focused on data cleaning, feature engineering, exploratory visualizations, and baseline logistic regression—we expanded the project to include six advanced models, new season-relative features, more realistic temporal evaluation, and ranking-based performance metrics.
 These additions move the project from “proof of concept” into a full championship forecasting system, allowing us to evaluate predictions for unseen future seasons and generate full-league rankings for 2026 and beyond.
 
 ### Why Temporal Splitting Was Required (Train ≤2015 → Test ≥2016)
