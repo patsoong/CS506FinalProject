@@ -366,7 +366,7 @@ This is the strongest performance of all models used in the project.
 
 
 ## Conclusion & Future Work
-- Our best-performing models (Random Forest, Stacking Ensemble, Softmax NN) reached 70% Top-1 accuracy and 100% Top-4 accuracy, demonstrating that championships are surprisingly predictable with engineered features.
+- Our best-performing models (Random Forest, Softmax NN) reached 70% Top-1 accuracy and 100% Top-4 accuracy, demonstrating that championships are surprisingly predictable with engineered features.
 - Season-relative normalization significantly improves all models by removing era bias.
 - Ranking metrics (Top-K accuracy, PR-AUC) are essential for rare-event prediction.
   
